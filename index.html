@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ClassScore 教師端</title>
+</head>
+
+<body>
+
+<h2>ClassScore 教師控制台</h2>
+
+<input id="name" placeholder="學生姓名">
+<button onclick="addStudent()">新增學生</button>
+
+<table id="table"></table>
+
+<h3>排行榜</h3>
+<ol id="rank"></ol>
+
+<script>
+
+let students=[]
+
+function addStudent(){
+
+let name=document.getElementById("name").value
+
+students.push({name:name,score:0})
+
+render()
+
+}
+
+function score(i,val){
+
+students[i].score+=val
+
+render()
+
+}
+
+function render(){
+
+let html=""
+
+students.forEach((s,i)=>{
+
+html+=`
+<tr>
+<td>${s.name}</td>
+<td>${s.score}</td>
+<td>
+<button onclick="score(${i},1)">+1</button>
+<button onclick="score(${i},3)">+3</button>
+</td>
+</tr>
+`
+
+})
+
+document.getElementById("table").innerHTML=html
+
+rank()
+
+}
+
+function rank(){
+
+let r=[...students]
+
+r.sort((a,b)=>b.score-a.score)
+
+let html=""
+
+r.forEach(s=>{
+
+html+=`<li>${s.name} ${s.score}</li>`
+
+})
+
+document.getElementById("rank").innerHTML=html
+
+}
+
+</script>
+
+</body>
+</html>
